@@ -10,24 +10,32 @@ export default class App extends React.Component {
     }
     this.getSuggestion=this.getSuggestion.bind(this);
   }
-  getSuggestion(e){
-    let arr1=["raunak","simran","poonam","rohan","simranJeet","pooja","swati"]
-    let filterArr=[]
-    for (let i=0;i<arr1.length;i++){
-      let uppr=(e.target.value.length===0?0:e.target.value.length-1)
-      let ele=arr1[i].substr(0,uppr+1)
-      if(ele.toLowerCase()===e.target.value.toLowerCase()){
-            filterArr.push(arr1[i])
-      }
+  getrandomBool(n){
+    var maxRandomCoeff=1000
+    if(n>maxRandomCoeff) n=maxRandomCoeff
+    return Math.floor(Math.random()*maxRandomCoeff)%n===0
     }
-    // console.log(filterArr)
-    this.setState({inputVal:e.target.value.toLowerCase()})
+  getSuggestion(e){
+    let filterArr=[]
+    let arr1=["raunak","simran","poonam","rohan","simranJeet","pooja","swati"]
+
+if(this.getrandomBool(2)){
+  for (let i=0;i<arr1.length;i++){
+    let uppr=(e.target.value.length===0?0:e.target.value.length-1)
+    let ele=arr1[i].substr(0,uppr+1)
+    if(ele.toLowerCase()===e.target.value.toLowerCase()){
+          filterArr.push(arr1[i])
+    }
+  }
+}
+this.setState({inputVal:e.target.value})
   return new Promise((resolve,reject)=>{
     let timeOut=Math.random()*200
+    
     setTimeout(()=>{
-      if((Math.random*1000)%1000===0){reject()}else{Promise.resolve(filterArr).then(this.setState({filterArr:filterArr}))}
-    },timeOut)
-  })
+      if(this.getrandomBool(10)){console.log("fail");reject([])}else{console.log("pass");resolve(filterArr)}},timeOut)
+  }).then(function(arr){this.setState({filterArr:arr})}.bind(this))
+  .catch(()=>{console.log("raunak")})
   }
   render(){
 return (
