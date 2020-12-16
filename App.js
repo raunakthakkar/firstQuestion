@@ -35,7 +35,7 @@ this.setState({inputVal:e.target.value})
     setTimeout(()=>{
       if(this.getrandomBool(10)){console.log("fail");reject([])}else{console.log("pass");resolve(filterArr)}},timeOut)
   }).then(function(arr){this.setState({filterArr:arr})}.bind(this))
-  .catch(()=>{console.log("raunak")})
+  .catch(()=>{console.log("rejecting the promise")})
   }
   render(){
 return (
